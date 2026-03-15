@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cluebox-Rätsel</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #0f172a, #1e293b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+h1 {
+  font-size: 48px;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 8px #000, 0 0 10px #3b82f6;
+  animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+  from {text-shadow: 2px 2px 8px #000, 0 0 10px #3b82f6;}
+  to {text-shadow: 2px 2px 8px #000, 0 0 25px #60a5fa;}
+}
+.card {
+  background:#1e293b;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+}
+input {
+  padding: 10px;
+  font-size: 24px;
+  text-align: center;
+  width: 80px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 10px;
+}
+button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #3b82f6;
+  color: white;
+  transition: background-color 0.3s, transform 0.2s;
+}
+button:hover {
+  background-color: #60a5fa;
+  transform: scale(1.1);
+}
+#result {
+  margin-top: 25px;
+  font-size: 24px;
+  opacity: 0;
+  transition: opacity 0.8s;
+  animation: none;
+}
+#result.show {
+  opacity: 1;
+  animation: flash 0.6s ease-in-out 3;
+}
+@keyframes flash {
+  0% {color: #fff;}
+  50% {color: #3b82f6;}
+  100% {color: #fff;}
+}
+.countdown {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 32px;
+  color: #f87171;
+  animation: pulse 1s infinite alternate;
+}
+@keyframes pulse {
+  from {opacity: 0.6;}
+  to {opacity: 1;}
+}
+</style>
+</head>
+<body>
+
+<h1>Cluebox-Rätsel</h1>
+<div class="card">
+  <div class="countdown" id="countdown"></div>
+  <p>Gib den 4-stelligen Code ein:</p>
+  <input id="codeInput" maxlength="4" placeholder="8164">
+  <br>
+  <button onclick="startCheck()">Code prüfen</button>
+  <div id="result"></div>
+</div>
+
+<script>
+let countdownEl = document.getElementById('countdown');
+function startCheck() {
+  let timeLeft = 3;
+  countdownEl.textContent = timeLeft;
+  countdownEl.style.opacity = 1;
+
+  let timer = setInterval(() => {
+    timeLeft--;
+    if(timeLeft > 0) {
+      countdownEl.textContent = timeLeft;
+    } else {
+      clearInterval(timer);
+      countdownEl.style.opacity = 0;
+      checkCode();
+    }
+  }, 1000);
+}
+
+function checkCode() {
+  const code = document.getElementById('codeInput').value;
+  const result = document.getElementById('result');
+
+  if(code === '8164') {
+    result.innerHTML = "🎉 Glückwunsch Maren & Fudayl!<br>Ihr habt alle Rätsel gelöst
+und die Cluebox geöffnet. Wir haben sogar eine Website für euch erstellt, auf der ihr den Code eingeben könnt<br><br>Website Erstellt von Tuba und Yasin";
+  } else {
+    result.innerHTML = "❌ Falscher Code. Versuch es nochmal.";
+  }
+  result.classList.add('show');
+}
+</script>
+
+</body>
+</html>
